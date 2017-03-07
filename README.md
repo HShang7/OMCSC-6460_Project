@@ -11,7 +11,7 @@ Multiple question types quiz and surveys make it a valuable partner for survey a
 
 ## Requirements
  
- ### Minimal
+ Minimal
  The absolute minimal requirements are:
   - Apache >= 2.4 | nginx >= 1.1 | any other php-ready webserver
   - php >= 5.6.30
@@ -24,6 +24,6 @@ Multiple question types quiz and surveys make it a valuable partner for survey a
  ## Licence
  Ed_Toolkit software is licenced  with Hshang7@gatech.edu
 
- "# OMCSC-6460_Project" 
+ "OMCSC-6460_Project" 
 
 
