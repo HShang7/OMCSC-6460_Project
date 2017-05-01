@@ -99,6 +99,12 @@ $max = 'limit ' .($pagenum - 1) * $page_rows .',' .$page_rows;
 	
 //$query = "SELECT * FROM question $max";
 $data_p = mysqli_query($db,$query); 
+$score = 0;
+				$stuAnswer = '';
+				$question_id = $pagenum-1;
+				$correctAnswer = $_SESSION['question_quiz'][$question_id]['answer'];
+				$quizID = $_SESSION['quizID'];
+				$questionID_quiz = $_SESSION['question_quiz'][$question_id]['questionID'];
 ?>
 
 
@@ -113,11 +119,13 @@ $data_p = mysqli_query($db,$query);
 						 <!--<?php echo message(); ?> -->
 						 	<?php
 								 //This is where you display your query results
-
+								
 								 while($question = mysqli_fetch_assoc( $data_p )) 
 
 								 { 
-
+												//$query2= "INSERT INTO Report (questionID, pageNum,quizID, correctAnswer, stuID) 
+												//VALUES ('" .$questionID_quiz. "', '" .$pagenum. "','" .$quizID. "', '" .$correctAnswer. "', '" .$stuID. "')";
+												//$result = mysqli_query($db, $query2);
 										 echo $question['questionText']; 
 											   $current_qID = $question['questionID'];
 											   $answer_set =  find_all_answer($current_qID);
@@ -220,12 +228,19 @@ $data_p = mysqli_query($db,$query);
 					   </div>
 		<?php include("lib/footer.php"); ?> 
 		<?php
-				$score = 0;
-				$stuAnswer = '';
-				$question_id = $pagenum-1;
-				$correctAnswer = $_SESSION['question_quiz'][$question_id]['answer'];
-				$quizID = $_SESSION['quizID'];
-				$questionID_quiz = $_SESSION['question_quiz'][$question_id]['questionID'];
+				//$score = 0;
+				//$stuAnswer = '';
+				//$question_id = $pagenum-1;
+				//$correctAnswer = $_SESSION['question_quiz'][$question_id]['answer'];
+				//$quizID = $_SESSION['quizID'];
+				//$questionID_quiz = $_SESSION['question_quiz'][$question_id]['questionID'];
+				//build report table
+				//while($question = mysqli_fetch_assoc( $data )) 
+
+				//{ 
+				
+				//}
+				
 				if (isset($_POST['submit'])) 
 				{
 					if(isset($_POST['radio']))
@@ -243,9 +258,11 @@ $data_p = mysqli_query($db,$query);
 						
 						//$query1 = "INSERT INTO Report (questionID, pageNum,quizID, correctAnswer, stuID, stuAnswer) 
 									//VALUES ('" .$questionID_quiz. "', '" .$pagenum. "','" .$quizID. "', '" .$correctAnswer. "', '" .$stuID. "','" .$stuAnswer. "')";
-
+						$query0 = "INSERT INTO Report (questionID, pageNum,quizID, correctAnswer, stuID, stuAnswer) 
+									VALUES ('" .$questionID_quiz. "', '" .$pagenum. "','" .$quizID. "', '" .$correctAnswer. "', '" .$stuID. "','" .$stuAnswer. "')";
+						$result = mysqli_query($db, $query0);
 						$query1 = "update Report set stuAnswer = '" .$stuAnswer. "' 
-									where stuID = '" .$stuID. "' and quizID = '" .$quizID. "' and questionID = '" .$questionID_quiz. "' ";
+									where stuID = '" .$stuID. "' and quizID = '" .$quizID. "' and questionID = '" .$questionID_quiz. "' and pageNum = '" .$pagenum. "'";
 						$result = mysqli_query($db, $query1);
 						if (mysqli_affected_rows($db) > 0) {
 							if($showQueries)
@@ -263,8 +280,12 @@ $data_p = mysqli_query($db,$query);
 						
 						$stuAnswer = 'unanswered';
 						echo $stuAnswer;
-						$query1 = "INSERT INTO Report (questionID, pageNum,quizID, correctAnswer, stuID, stuAnswer) 
+						
+						$query0 = "INSERT INTO Report (questionID, pageNum,quizID, correctAnswer, stuID, stuAnswer) 
 									VALUES ('" .$questionID_quiz. "', '" .$pagenum. "','" .$quizID. "', '" .$correctAnswer. "', '" .$stuID. "','" .$stuAnswer. "')";
+						$result = mysqli_query($db, $query0);			
+						$query1 = "update Report set stuAnswer = '" .$stuAnswer. "' 
+									where stuID = '" .$stuID. "' and quizID = '" .$quizID. "' and questionID = '" .$questionID_quiz. "' and pageNum = '" .$pagenum. "'";
 
 						$result = mysqli_query($db, $query1);
 				}
